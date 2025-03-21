@@ -2,7 +2,7 @@ import { createReactAgent } from '@langchain/langgraph/prebuilt'
 import { ChatOpenAI } from '@langchain/openai';
 import { DynamicStructuredTool } from '@langchain/core/tools';
 
-const model = new ChatOpenAI({ model: 'gpt-4o-mini' });
+const model = new ChatOpenAI({ model: 'gpt-4o-mini', apiKey:"*****" });
 
 export const getBaseModel = (): ChatOpenAI => {
   return model;

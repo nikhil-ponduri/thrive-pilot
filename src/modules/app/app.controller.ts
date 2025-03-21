@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Post, Req } from '@nestjs/common';
 import { AppService } from './app.service';
 import BaseAgent from '../agents';
+import ResponseInterceptor from '../agents/interceptors/response.interceptor';
 
 @Controller()
 export class AppController {
@@ -17,7 +18,7 @@ export class AppController {
         role: 'user',
         content: body.message
       }]);
-      return result.messages[result.messages.length - 1].content as string;
+      return ResponseInterceptor.intercept(result.messages);
     } catch (error) {
       console.error(error);
       return 'Error';

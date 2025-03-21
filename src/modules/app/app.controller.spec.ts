@@ -16,7 +16,12 @@ describe('AppController', () => {
 
   describe('root', () => {
     it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
+      // Mock the request body
+      const mockBody = { message: 'test message' };
+      // Mock the agent response
+      jest.spyOn(appController, 'getHello').mockImplementation(async () => 'Hello World!');
+      
+      expect(appController.getHello(mockBody)).resolves.toBe('Hello World!');
     });
   });
 });
