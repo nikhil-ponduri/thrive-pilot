@@ -11,8 +11,8 @@ class ResponseInterceptor {
   });
   static async intercept(messages: BaseMessage[]) {
     const response = await this.structuredLlm.invoke([...messages, new SystemMessage(`
-      The previous messages are a conversation between a user and an assistant.
-      In this conversation, the user is asking for a response that is human readable and contains all the information that the user needs.
+      The previous messages are a conversation between a user and an AI assistant and it is multi step conversation.
+      In this conversation, the user is asking for a request that is human readable and contains all the information 
       Based on the conversation history, please format the response in a human readable format. 
       The response should be in the same language as the conversation history.
       The response should be in the same tone as the conversation history.

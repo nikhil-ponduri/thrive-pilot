@@ -3,7 +3,7 @@ import EmployeeAgent from "./employees";
 import { getBaseModel } from "./utils";
 import { StateGraph } from "@langchain/langgraph";
 import GoalAgent from "./goals/idnex";
-
+import HighFiveAgent from "./highfive";
 export default class BaseAgent {
   private workflowApp: any;
 
@@ -11,7 +11,7 @@ export default class BaseAgent {
     const model = getBaseModel();
 
     const workflow = createSupervisor({
-      agents: [EmployeeAgent.agent, GoalAgent.agent],
+      agents: [EmployeeAgent.agent, GoalAgent.agent, HighFiveAgent.agent],
       llm: model,
       prompt: `
     You are a team supervisor managing multiple expert agents including an employee data expert. 
@@ -21,6 +21,8 @@ export default class BaseAgent {
     DO NOT summarize or remove the actual data content. Your job is to ensure the complete information is passed to the user in a clear, human-readable format.
     
     For employees events and data or any other related operations or information related to employees, use EmployeeAgent.
+
+    For highfive or Kudos or Any other reward points operations, use HighFiveAgent.
     
     Employee data has a rich structure containing:
     - Basic information (id, fullName, email, empId, status)
