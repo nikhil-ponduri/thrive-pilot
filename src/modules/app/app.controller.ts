@@ -20,7 +20,6 @@ export class AppController {
         }
         return new HumanMessage(message.text);
       });
-      const agent = new BaseAgent({});
       const systemMessage = new SystemMessage(`
         You are a helpful assistant that can answer questions and help with tasks. User will provide you with a message and you will need to answer the question or help with the task.
           
@@ -33,7 +32,7 @@ export class AppController {
 
           Any Reference to a website should be in the format of <a href="https://www.google.com">Google</a> but ensure that the link is clickable and opens in a new tab.
         `)
-      const result = await agent.invoke([
+      const result = await BaseAgent.invoke([
        systemMessage,
         ...previousMessages,
         {
