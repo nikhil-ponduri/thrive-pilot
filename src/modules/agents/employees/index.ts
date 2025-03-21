@@ -1,5 +1,6 @@
-import { createBaseAgent, getBaseModel } from "../utils";
+import { createBaseAgent, getBaseModel } from "../utils/index";
 import { tools } from "./tools";
+
 const model = getBaseModel();
 
 class EmployeeAgent {

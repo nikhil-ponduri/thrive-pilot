@@ -1,6 +1,6 @@
 import { createSupervisor } from "@langchain/langgraph-supervisor";
 import EmployeeAgent from "./employees";
-import { getBaseModel } from "./utils";
+import { getBaseModel } from "./utils/index";
 import { StateGraph } from "@langchain/langgraph";
 import GoalAgent from "./goals/idnex";
 import HighFiveAgent from "./highfive";

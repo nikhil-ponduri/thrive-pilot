@@ -1,6 +1,6 @@
 import { DynamicStructuredTool } from "@langchain/core/tools";
 import { tools } from "./tools";
-import { createBaseAgent, getBaseModel } from "../utils";
+import { createBaseAgent, getBaseModel } from "../utils/index";
 
 class HighFiveAgent {
   static agent = createBaseAgent({

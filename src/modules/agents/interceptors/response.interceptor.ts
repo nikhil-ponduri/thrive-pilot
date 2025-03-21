@@ -1,5 +1,5 @@
 import { BaseMessage, SystemMessage } from "@langchain/core/messages";
-import { getBaseModel } from "../utils";
+import { getBaseModel } from "../utils/index";
 import { z } from "zod";
 
 class ResponseInterceptor {

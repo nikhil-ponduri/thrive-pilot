@@ -14,12 +14,12 @@ export class AppController {
       if (!body?.message) {
         return { response: 'No message provided' };
       }
-      const previousMessages = body.context.map((message) => {
+      const previousMessages = body.context?.map((message) => {
         if (message.type === 'assistant') {
           return new AIMessage(message.text);
         }
         return new HumanMessage(message.text);
-      });
+      }) || [];
       const systemMessage = new SystemMessage(`
         You are a helpful assistant that can answer questions and help with tasks. User will provide you with a message and you will need to answer the question or help with the task.
           
