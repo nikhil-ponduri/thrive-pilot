@@ -46,14 +46,7 @@ export class AppController {
         // make sure content is not null and tool_calls is empty and tool_call_id is null
         return !!message.content && !message.tool_calls?.length && !message.tool_call_id && message.getType() === 'ai'
       });
-      const messages = filteredMessages.map((message: any) => {
-        return message.content
-      });
       const finalMessage = await ResponseInterceptor.intercept(filteredMessages);
-      // remove duplicate messages
-      // const uniqueMessages = messages.filter((message: string, index: number, self: string[]) =>
-      //   self.indexOf(message) === index
-      // );
       return { messages: [finalMessage] };
     } catch (error) {
       console.error(error);
