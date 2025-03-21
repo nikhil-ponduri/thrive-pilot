@@ -14,10 +14,17 @@ export class AppController {
         return 'No message provided';
       }
       const agent = new BaseAgent({});
-      const result = await agent.invoke([{
-        role: 'user',
-        content: body.message
-      }]);
+      const result = await agent.invoke([
+        {
+          role: 'system',
+          content: `You are a helpful assistant that can answer questions and help with tasks. User will provide you with a message and you will need to answer the question or help with the task.`
+        },
+        {
+          role: 'user',
+          content: body.message
+        }
+      ]);
+      return result.messages;
       return ResponseInterceptor.intercept(result.messages);
     } catch (error) {
       console.error(error);
