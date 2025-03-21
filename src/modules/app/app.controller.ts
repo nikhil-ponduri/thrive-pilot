@@ -18,7 +18,17 @@ export class AppController {
       const result = await agent.invoke([
         {
           role: 'system',
-          content: `You are a helpful assistant that can answer questions and help with tasks. User will provide you with a message and you will need to answer the question or help with the task.`
+          content: `
+          You are a helpful assistant that can answer questions and help with tasks. User will provide you with a message and you will need to answer the question or help with the task.
+          
+          Ensure that the response is in HTML format 
+
+          Do not use any <html>, <body>, <head>, <h1> tags.
+
+          if needed use a little inline css to style the response color and font size and font weight.
+
+          Any Reference to a website should be in the format of <a href="https://www.google.com">Google</a>
+          `
         },
         {
           role: 'user',
@@ -27,11 +37,13 @@ export class AppController {
       ]);
       const filteredMessages = result.messages.filter((message: any) => {
         // make sure content is not null and tool_calls is empty and tool_call_id is null
-        return !!message.content && !message.tool_calls?.length && !message.tool_call_id && message.type === 'ai'
+        return !!message.content && !message.tool_calls?.length && !message.tool_call_id && message.getType() === 'ai'
       });
      
-      const contents = filteredMessages.map((message: any) => message.content);
-      return { contents };
+      const messages = filteredMessages.map((message: any) => {
+        return message.content
+      });
+      return { messages };
     } catch (error) {
       console.error(error);
       throw new Error('Error');
