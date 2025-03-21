@@ -27,7 +27,7 @@ export class AppController {
 
           if needed use a little inline css to style the response color and font size and font weight.
 
-          Any Reference to a website should be in the format of <a href="https://www.google.com">Google</a>
+          Any Reference to a website should be in the format of <a href="https://www.google.com">Google</a> but ensure that the link is clickable and opens in a new tab.
           `
         },
         {
@@ -35,15 +35,7 @@ export class AppController {
           content: body.message
         }
       ]);
-      const filteredMessages = result.messages.filter((message: any) => {
-        // make sure content is not null and tool_calls is empty and tool_call_id is null
-        return !!message.content && !message.tool_calls?.length && !message.tool_call_id && message.getType() === 'ai'
-      });
-     
-      const messages = filteredMessages.map((message: any) => {
-        return message.content
-      });
-      return { messages };
+      return { messages: [result.messages.pop().content] };
     } catch (error) {
       console.error(error);
       throw new Error('Error');
