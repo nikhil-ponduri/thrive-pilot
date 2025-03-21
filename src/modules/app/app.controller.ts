@@ -1,19 +1,24 @@
 import { Body, Controller, Get, Post, Req } from '@nestjs/common';
 import { AppService } from './app.service';
 import BaseAgent from '../agents';
-import ResponseInterceptor from '../agents/interceptors/response.interceptor';
-import { AIMessage, BaseMessage } from '@langchain/core/messages';
+import { AIMessage, BaseMessage, HumanMessage } from '@langchain/core/messages';
 
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) { }
 
   @Post("/chat")
-  async getHello(@Body() body: { message: string }): Promise<any> {
+  async getHello(@Body() body: { message: string, context: [{ text: string, type: 'assistant' | 'user' }] }): Promise<any> {
     try {
       if (!body?.message) {
         return { response: 'No message provided' };
       }
+      const previousMessages = body.context.map((message) => {
+        if (message.type === 'assistant') {
+           return new AIMessage(message.text);
+        }
+        return new HumanMessage(message.text);
+      });
       const agent = new BaseAgent({});
       const result = await agent.invoke([
         {
@@ -25,17 +30,31 @@ export class AppController {
 
           Do not use any <html>, <body>, <head>, <h1> tags.
 
-          if needed use a little inline css to style the response color and font size and font weight.
+          if needed use a little inline css to style the response and make it more readable.
+
 
           Any Reference to a website should be in the format of <a href="https://www.google.com">Google</a> but ensure that the link is clickable and opens in a new tab.
           `
         },
+        ...previousMessages,
         {
           role: 'user',
           content: body.message
         }
       ]);
-      return { messages: [result.messages.pop().content] };
+
+      const filteredMessages = result.messages.slice(previousMessages.length + 1).filter((message: any) => {
+        // make sure content is not null and tool_calls is empty and tool_call_id is null
+        return !!message.content && !message.tool_calls?.length && !message.tool_call_id && message.getType() === 'ai'
+      });
+      const messages = filteredMessages.map((message: any) => {
+        return message.content
+      });
+      // remove duplicate messages
+      const uniqueMessages = messages.filter((message: string, index: number, self: string[]) =>
+        self.indexOf(message) === index
+      );
+      return { messages: uniqueMessages };
     } catch (error) {
       console.error(error);
       throw new Error('Error');
