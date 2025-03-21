@@ -22,6 +22,8 @@ class ResponseInterceptor {
       The response should be in the same format as the conversation history.
 
       The response should include all the information that the user needs.
+
+      Ensure the response is in HTML format.
       `)]);
     return response.content;
   }
