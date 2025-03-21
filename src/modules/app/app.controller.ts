@@ -8,10 +8,12 @@ export class AppController {
   constructor(private readonly appService: AppService) { }
 
   @Post("/chat")
-  async getHello(@Body() body: { message: string }): Promise<string> {
+  async getHello(@Body() body: { message: string }): Promise<{
+    response: string;
+  }> {
     try {
       if (!body?.message) {
-        return 'No message provided';
+        return { response: 'No message provided' };
       }
       const agent = new BaseAgent({});
       const result = await agent.invoke([
@@ -24,11 +26,12 @@ export class AppController {
           content: body.message
         }
       ]);
-      return result.messages;
-      return ResponseInterceptor.intercept(result.messages);
+      // return result.messages;
+      const response = await ResponseInterceptor.intercept(result.messages);
+      return { response };
     } catch (error) {
       console.error(error);
-      return 'Error';
+      throw new Error('Error');
     }
   }
 }
