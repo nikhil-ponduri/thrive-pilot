@@ -1,4 +1,3 @@
-
 export const getAllEmployeeDataPrompt = `
     Get All Employees Data of the Company/Account
     
@@ -49,18 +48,24 @@ export const createEmployeesPrompt = `
     `
 
 export const getEmployeeByEmailOrNamePrompt = `
-  Get All Employees by filtering on Email Address or Employee Name
+  Get employee information by email address or name. Use this tool when:
+  - Checking if an employee exists in the system
+  - Verifying an email address
+  - Looking up employee details by email or name
+  - Confirming if a specific email is registered
     
-   The response format will be an array with the following fields:
-    - id: Unique identifier for the employee
-    - fullName: Full name of the employee
-    - nickName: Nickname or username
-    - email: Email address
-    - empId: Employee ID (e.g., E600)
-    - phone: Phone number (may be null)
-    - status: Current status (e.g., ONBOARDED)
-    - profilePicUrl: URL to profile picture
-    `
+  The response will be an array of matching employees with the following fields:
+  - id: Unique identifier for the employee
+  - fullName: Full name of the employee
+  - nickName: Nickname or username
+  - email: Email address
+  - empId: Employee ID (e.g., E600)
+  - phone: Phone number (may be null)
+  - status: Current status (e.g., ONBOARDED)
+  - profilePicUrl: URL to profile picture
+    
+  If no employees are found matching the search term, an empty array will be returned.
+  `
 
 
 export const deactivateEmployeePrompt = `

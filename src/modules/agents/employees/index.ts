@@ -19,7 +19,7 @@ class EmployeeAgent {
     
     The list of operations you can perform are:
     ${tools.map((tool) => `- ${tool.name}: ${tool.description}`).join('\n')}
-    You can also search for employees by name, department, or role.
+    You can also search for employees by name, department, role, or email.
 
     ** Take the confirmation from the user before performing any update operation on the employee data **
     `,

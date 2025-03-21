@@ -20,7 +20,7 @@ export const getAllHighFivesPrompt = `
 `;  
 
 export const getHighFivesReceivedByEmployeePrompt = `
-    Get All HighFives Data of an Employee in the Company/Organization. Returns an array of high five objects or an empty array if none found.
+    Get All HighFives Data Received by an Employee from other Employees in the Company/Organization. Returns an array of high five objects or an empty array if none found.
 
     Response Structure:
 
@@ -47,7 +47,7 @@ export const getHighFivesReceivedByEmployeePrompt = `
 `;
 
 export const getHighFivesSentByEmployeePrompt = `
-    Get All HighFives Data of an Employee in the Company/Organization. Returns an array of high five objects or an empty array if none found.
+    Get All HighFives Sent by an Employee to other Employees in the Company/Organization. Returns an array of high five objects or an empty array if none found.
 
     Response Structure:
 
