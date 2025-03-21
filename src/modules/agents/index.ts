@@ -2,6 +2,7 @@ import { createSupervisor } from "@langchain/langgraph-supervisor";
 import EmployeeAgent from "./employees";
 import { getBaseModel } from "./utils";
 import { StateGraph } from "@langchain/langgraph";
+import GoalAgent from "./goals/idnex";
 
 export default class BaseAgent {
   private workflowApp: any;
@@ -10,7 +11,7 @@ export default class BaseAgent {
     const model = getBaseModel();
 
     const workflow = createSupervisor({
-      agents: [EmployeeAgent.agent],
+      agents: [EmployeeAgent.agent, GoalAgent.agent],
       llm: model,
       prompt: `
     You are a team supervisor managing multiple expert agents including an employee data expert. 
@@ -31,7 +32,7 @@ export default class BaseAgent {
 
   async invoke(messages: any[]) {
     const response = await this.workflowApp.invoke({ messages });
-     
+
     return response;
   }
 
