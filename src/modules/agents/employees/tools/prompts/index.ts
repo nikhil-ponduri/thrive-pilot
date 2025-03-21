@@ -32,3 +32,39 @@ export const getEmployeeByIdPrompt = `
     - Roles: employeeRoles array with role details
     - Custom data: customPropertiesArray with properties like DOB, gender, location
     `
+
+
+export const createEmployeesPrompt = `
+    To Create Employees in the Company/Account. It can create multiple employees at once.
+
+    The response format will be a list of employees after creation
+    - id: Unique identifier for the employee
+    - fullName: Full name of the employee
+    - nickName: Nickname or username
+    - email: Email address
+    - empId: Employee ID (e.g., E600)
+    - phone: Phone number (may be null)
+    - status: Current status (e.g., ONBOARDED)
+    - profilePicUrl: URL to profile picture
+    `
+
+export const getEmployeeByEmailOrNamePrompt = `
+  Get All Employees by filtering on Email Address or Employee Name
+    
+   The response format will be an array with the following fields:
+    - id: Unique identifier for the employee
+    - fullName: Full name of the employee
+    - nickName: Nickname or username
+    - email: Email address
+    - empId: Employee ID (e.g., E600)
+    - phone: Phone number (may be null)
+    - status: Current status (e.g., ONBOARDED)
+    - profilePicUrl: URL to profile picture
+    `
+
+
+export const deactivateEmployeePrompt = `
+    Deactivate Employee by Id, It can deactivate multiple employees at once
+    
+    The response format will be a boolean value indicating the success of the operation
+    `

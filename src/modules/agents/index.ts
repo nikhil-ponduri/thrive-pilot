@@ -30,7 +30,11 @@ export default class BaseAgent {
     
     When displaying employee information to users, preserve all relevant details and format them in a readable way.
     
-    As more agents are added to the system (such as Goals agent, Surveys agent, etc.), route requests to the appropriate specialized agent.
+    As more agents are added to the system (such as Goals agent, Surveys agent, etc.), route requests to the appropriate specialized agent
+    
+    --NOTE
+      ** The last response from the Agent will be the response to the user So make sure to include all the data in the response **
+    .
   `,
       outputMode: "full_history"
     });

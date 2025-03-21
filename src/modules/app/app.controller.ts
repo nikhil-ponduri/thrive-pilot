@@ -2,6 +2,7 @@ import { Body, Controller, Get, Post, Req } from '@nestjs/common';
 import { AppService } from './app.service';
 import BaseAgent from '../agents';
 import { AIMessage, BaseMessage, HumanMessage } from '@langchain/core/messages';
+import ResponseInterceptor from '@modules/agents/interceptors/response.interceptor';
 
 @Controller()
 export class AppController {
@@ -50,11 +51,12 @@ export class AppController {
       const messages = filteredMessages.map((message: any) => {
         return message.content
       });
+      const finalMessage = await ResponseInterceptor.intercept(filteredMessages);
       // remove duplicate messages
-      const uniqueMessages = messages.filter((message: string, index: number, self: string[]) =>
-        self.indexOf(message) === index
-      );
-      return { messages: uniqueMessages };
+      // const uniqueMessages = messages.filter((message: string, index: number, self: string[]) =>
+      //   self.indexOf(message) === index
+      // );
+      return { messages: [finalMessage] };
     } catch (error) {
       console.error(error);
       throw new Error('Error');
