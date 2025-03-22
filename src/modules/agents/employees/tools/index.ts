@@ -1,33 +1,18 @@
 import { tool, DynamicStructuredTool } from "@langchain/core/tools";
 import { z } from 'zod';
 import axios from '../../../../axios';
-import { getAllEmployeeDataPrompt, getEmployeeByIdPrompt, createEmployeesPrompt, getEmployeeByEmailOrNamePrompt, deactivateEmployeePrompt, sendInviteToEmployeePrompt, moveEmployeesFromDeactivatedToActivePrompt, initiatePasswordResetPrompt } from './prompts';
-
-// Department tool prompts
-const getDepartmentsPrompt = `
-  Get departments of the organization. 
-  
-  Optional: Provide a search term to filter departments by name.
-  
-  The response will be an array of departments with details like:
-  - id: Department identifier
-  - name: Department name
-  - leadId: ID of the department lead/manager
-  - lead: Object containing details about the department lead
-`;
-
-const createDepartmentsPrompt = `
-  Create multiple departments at once for the organization .
-  
-  Each department requires:
-  - name: Name of the department
-  - leadId: The employee ID who will be the lead/manager of the department
-
-  ** NOTE **
-    - If there is no lead info provided, you can ask the user for the lead info.
-  
-  The response will be an array of the newly created departments.
-`;
+import { 
+  getAllEmployeeDataPrompt, 
+  getEmployeeByIdPrompt, 
+  createEmployeesPrompt, 
+  getEmployeeByEmailOrNamePrompt, 
+  deactivateEmployeePrompt, 
+  sendInviteToEmployeePrompt, 
+  moveEmployeesFromDeactivatedToActivePrompt, 
+  initiatePasswordResetPrompt,
+  getDepartmentsPrompt,
+  createDepartmentsPrompt
+} from './prompts';
 
 const getAllEmployeeData = tool(
   async (args) => {
@@ -43,6 +28,7 @@ const getAllEmployeeData = tool(
     name: "getAllEmployees",
     description: getAllEmployeeDataPrompt,
     schema: z.object({
+      dummy: z.boolean().optional().describe("Dummy parameter that is not used").default(true),
     }),
   }
 );

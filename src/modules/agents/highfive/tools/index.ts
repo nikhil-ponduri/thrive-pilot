@@ -10,7 +10,7 @@ export const getAllHighFives = tool(async (args) => {
   name: 'getAllHighFives',
   description: getAllHighFivesPrompt,
   schema: z.object({
-    
+    dummy: z.boolean().optional().describe("Dummy parameter that is not used").default(true),
   }),
 });
 
@@ -38,4 +38,6 @@ export const getHighFivesSentByEmployee = tool(async (args) => {
 
 export const tools: DynamicStructuredTool[] = [
   getAllHighFives,
+  getHighFivesReceivedByEmployee,
+  getHighFivesSentByEmployee
 ];
