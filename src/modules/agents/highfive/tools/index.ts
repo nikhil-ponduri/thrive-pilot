@@ -1,6 +1,6 @@
 import { DynamicStructuredTool, tool } from "@langchain/core/tools";
 import { z } from "zod";
-import { getAllHighFivesPrompt, getHighFivesReceivedByEmployeePrompt, getHighFivesSentByEmployeePrompt } from "./prompt";
+import { getAllHighFivesPrompt, getAllHighOfEmployeePrompt, getHighFivesReceivedByEmployeePrompt, getHighFivesSentByEmployeePrompt } from "./prompt";
 import axios from '../../../../axios';
 
 export const getAllHighFives = tool(async (args) => {
@@ -21,7 +21,7 @@ export const getHighFivesReceivedByEmployee = tool(async (args) => {
   name: 'getHighFivesReceivedByEmployee',
   description:  getHighFivesReceivedByEmployeePrompt,
   schema: z.object({
-    employeeId: z.string().describe('The id of the employee to get the high fives received by'),
+    employeeId: z.number().describe('The ID of the employee to get the high fives received by which is a number'),
   }),
 }); 
 
@@ -32,12 +32,30 @@ export const getHighFivesSentByEmployee = tool(async (args) => {
   name: 'getHighFivesSentByEmployee',
   description: getHighFivesSentByEmployeePrompt,
   schema: z.object({
-    employeeId: z.string().describe('The id of the employee to get the high fives sent by'),
+    employeeId: z.number().describe('The ID of the employee to get the high fives sent by which is a number'),
+  }),
+});
+
+export const getAllHighOfEmployee = tool(async (args) => {
+  const [receivedHighFives, sentHighFives] = await Promise.all([
+    axios.post(`/v1/kudos/search?userId=${args.employeeId}&type=RECEIVER`),
+    axios.post(`/v1/kudos/search?senderId=${args.employeeId}&type=SENDER`)
+  ]);
+  return {
+    receivedHighFives: receivedHighFives.data,
+    sentHighFives: sentHighFives.data
+  };
+}, {
+  name: 'getAllHighOfEmployee',
+  description: getAllHighOfEmployeePrompt,
+  schema: z.object({
+    employeeId: z.number().describe('The ID of the employee to get the high fives'),
   }),
 });
 
 export const tools: DynamicStructuredTool[] = [
   getAllHighFives,
   getHighFivesReceivedByEmployee,
-  getHighFivesSentByEmployee
+  getHighFivesSentByEmployee,
+  getAllHighOfEmployee
 ];

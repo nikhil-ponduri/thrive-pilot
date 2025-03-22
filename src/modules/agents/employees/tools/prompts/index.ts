@@ -76,7 +76,7 @@ export const deactivateEmployeePrompt = `
 
 
 export const sendInviteToEmployeePrompt = `
-  Move Employees from OnBoarding State to Invited State. Or Invite an employee who is already in the system
+  This function can be used to invite all employees at once or invite specific employees by providing the ids of the employees to invite who are in not invites state
 
   When we need to invite all employees at once, We can use sendInviteToEveryone as true and ids as empty array or We can use sendInviteToEveryone as false and ids as the ids of the employees to invite
 

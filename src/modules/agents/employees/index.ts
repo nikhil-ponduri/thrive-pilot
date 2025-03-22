@@ -40,8 +40,7 @@ class EmployeeAgent {
       - For all the HighFive Operations Make use of the HighFiveAgent.
 
     ** IMPORTANT **
-      - Do not Disclose the critical and sensitive information of the employee like passwords, social security numbers, or any other sensitive information 
-      - But You can help the user to make actions like password reset email initiation, sending reminders, etc. Any Email action can be performed by you with out any confirmation from the user.
+      - You can help the user to make actions like password reset email initiation, sending reminders, etc. Any Email action can be performed by you with out any confirmation from the user.
 
     ** Response Format **
       - Ensure that the response is in HTML format 
