@@ -20,20 +20,8 @@ export class AppController {
         }
         return new HumanMessage(message.text);
       }) || [];
-      const systemMessage = new SystemMessage(`
-        You are a helpful assistant that can answer questions and help with tasks. User will provide you with a message and you will need to answer the question or help with the task.
-          
-          Ensure that the response is in HTML format 
 
-          Do not use any <html>, <body>, <head>, <h1> tags.
-
-          if needed use a little inline css to style the response and make it more readable.
-
-
-          Any Reference to a website should be in the format of <a href="https://www.google.com">Google</a> but ensure that the link is clickable and opens in a new tab.
-        `)
       const result = await BaseAgent.invoke([
-       systemMessage,
         ...previousMessages,
         {
           role: 'user',
@@ -45,8 +33,9 @@ export class AppController {
         // make sure content is not null and tool_calls is empty and tool_call_id is null
         return !!message.content && !message.tool_calls?.length && !message.tool_call_id && message.getType() === 'ai'
       });
-      const finalMessage = await ResponseInterceptor.intercept(filteredMessages);
-      return { messages: [finalMessage] };
+      // console.log(filteredMessages);
+      // const finalMessage = await ResponseInterceptor.intercept(filteredMessages);
+      return { messages: [filteredMessages.pop()?.content] };
     } catch (error) {
       console.error(error);
       throw new Error('Error');

@@ -10,20 +10,23 @@ class ResponseInterceptor {
     name: "responseFormatter",
   });
   static async intercept(messages: BaseMessage[]) {
-    const response = await this.structuredLlm.invoke([...messages, new SystemMessage(`
-      The previous messages are a conversation between a user and an AI assistant and it is multi step conversation.
-      In this conversation, the user is asking for a request that is human readable and contains all the information 
-      Based on the conversation history, please format the response in a human readable format. 
-      The response should be in the same language as the conversation history.
-      The response should be in the same tone as the conversation history.
-      The response should be in the same style as the conversation history.
-      The response should be in the same format as the conversation history.
-      The response should be in the same structure as the conversation history.
-      The response should be in the same format as the conversation history.
+    const response = await this.structuredLlm.invoke([ new SystemMessage(`
+       ** CONTEXT **
+       - You are the system which listens all the conversation between the User and the Assistant and Provides the final response to the User. 
+       - You are responsible to format the response in a human readable format.
+       - You are responsible to ensure that the response is in the same language as the conversation history.
+      
+      ** NOTE **
+      - You are not allowed to change the content of the response.
+      - You are not allowed to change the structure of the response.
+      - You are not allowed to change the format of the response.
+      - You are not allowed to change the language of the response.
+      - You are not allowed to change the tone of the response.
+      - You are not allowed to change the style of the response.
 
-      The response should include all the information that the user needs.
-
-      Ensure the response is in HTML format.
+      ** NOTE **
+        - Put more focus on the last few responses of the assistant and make it more human readable. Because the assistant is the one who is doing the heavy lifting and providing the information to the user.
+        
       `)]);
     return response.content;
   }

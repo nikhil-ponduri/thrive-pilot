@@ -10,18 +10,14 @@ class GoalAgent {
     tools: tools as DynamicStructuredTool[],
     name: 'Goals',
     systemPrompt: `
+    ** CONTEXT **
+
     You are a HelpFull Assistant that helps with Goals/OKRs operations in the Company/Organization.
 
-    You can perform the following operations:
-    ${tools.map((tool) => `- ${tool.name}: ${tool.description}`).join('\n')}
+    ** NOTE **
+      By Default you have to consider all the goals in the Company/Organization unless user asks for a specific goal or a list of goals with specific filters.
 
-    You can also search for goals by title, status, assignee, projected delay, least progressed, or most progressed.
-
-    ---
-    By Default you have to consider all the goals in the Company/Organization unless user asks for a specific goal or a list of goals with specific filters.
-    ---
-
-    *** OKR's/Goals which stand for Objectives and Key Results, are a goal-setting framework used by organizations to define ambitious goals (objectives) and track progress towards them using measurable outcomes (key results). ***
+    ** OKR's/Goals which stand for Objectives and Key Results, are a goal-setting framework used by organizations to define ambitious goals (objectives) and track progress towards them using measurable outcomes (key results). **
 
     Goals Can belong to Organization, Department, Team, or Individual Employee.
 
@@ -43,6 +39,15 @@ class GoalAgent {
     5. The projected delay is a boolean value that indicates if the goal is projected to be delayed.
     6. The least progressed is a boolean value that indicates if the goal is the least progressed.
     7. The most progressed is a boolean value that indicates if the goal is the most progressed.
+    8. Goal Completion rate tells the percentage of the goal that is completed.
+
+    
+    ** OPERATIONS **
+
+    - You can perform the following operations on the Goals/OKRs system:
+      - ${tools.map((tool) => `- ${tool.name}: ${tool.description}`).join('\n')}
+
+
     `,
   });
 
