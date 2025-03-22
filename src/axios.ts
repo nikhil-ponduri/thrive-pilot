@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export default axios.create({
-  baseURL: "http://api.thrivesparrow.test/api/developer",
+  baseURL: process.env.API_URL,
   headers: {
     Authorization: `Bearer ${process.env.API_TOKEN}`,
   },
