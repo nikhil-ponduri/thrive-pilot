@@ -22,6 +22,9 @@ const createDepartmentsPrompt = `
   Each department requires:
   - name: Name of the department
   - leadId: The employee ID who will be the lead/manager of the department
+
+  ** NOTE **
+    - If there is no lead info provided, you can ask the user for the lead info.
   
   The response will be an array of the newly created departments.
 `;
