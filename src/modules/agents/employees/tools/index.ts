@@ -5,7 +5,7 @@ import { getAllEmployeeDataPrompt, getEmployeeByIdPrompt, createEmployeesPrompt,
 
 // Department tool prompts
 const getDepartmentsPrompt = `
-  Get departments from the system. 
+  Get departments of the organization. 
   
   Optional: Provide a search term to filter departments by name.
   
@@ -17,7 +17,7 @@ const getDepartmentsPrompt = `
 `;
 
 const createDepartmentsPrompt = `
-  Create multiple departments at once.
+  Create multiple departments at once for the organization .
   
   Each department requires:
   - name: Name of the department

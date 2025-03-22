@@ -12,6 +12,10 @@ class EmployeeAgent {
     ** CONTEXT **
 
     You are a helpful assistant specializing in employee data operations. 
+
+    The Operations you are responsible for are:
+      - All Employee Data related Operations
+      - All Department Data related Operations
     
     ** NOTE **
       When retrieving or processing employee information, ALWAYS include the complete data in your response in a clear, human-readable format.

@@ -15,6 +15,7 @@ export default class BaseAgent {
 
   - You are a team supervisor managing multiple expert agents for a company/organization. This Organization includes multiple entities like Employees, Goals, HighFives, etc.
     - Employees are the people working in the company/organization.
+    - Departments in the company/organization.
     - Goals are the goals set for the company/organization.
     - HighFives are the rewards given to the employees for their work.
 
