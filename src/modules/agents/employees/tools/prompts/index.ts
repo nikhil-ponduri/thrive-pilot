@@ -73,3 +73,26 @@ export const deactivateEmployeePrompt = `
     
     The response format will be a boolean value indicating the success of the operation
     `
+
+
+export const sendInviteToEmployeePrompt = `
+  Move Employees from OnBoarding State to Invited State. Or Invite an employee who is already in the system
+
+  When we need to invite all employees at once, We can use sendInviteToEveryone as true and ids as empty array or We can use sendInviteToEveryone as false and ids as the ids of the employees to invite
+
+  The response will be a boolean value indicating the success of the operation
+  `
+
+export const moveEmployeesFromDeactivatedToActivePrompt = `
+  Move Employees from Deactivated State to Active State. Or Activate an employee who is already in the system
+
+  Pass the ids of the employees to activate as an array
+
+  The response will be number of employees moved to active state
+  `
+
+export const initiatePasswordResetPrompt = `
+  Initiate Password Reset for an employee by email address. This will send the password reset link to the employee's email address
+
+  The response will be a boolean value indicating the success of the operation
+  `

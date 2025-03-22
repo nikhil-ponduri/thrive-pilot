@@ -1,7 +1,30 @@
 import { tool, DynamicStructuredTool } from "@langchain/core/tools";
 import { z } from 'zod';
 import axios from '../../../../axios';
-import { getAllEmployeeDataPrompt, getEmployeeByIdPrompt, createEmployeesPrompt, getEmployeeByEmailOrNamePrompt, deactivateEmployeePrompt } from './prompts';
+import { getAllEmployeeDataPrompt, getEmployeeByIdPrompt, createEmployeesPrompt, getEmployeeByEmailOrNamePrompt, deactivateEmployeePrompt, sendInviteToEmployeePrompt, moveEmployeesFromDeactivatedToActivePrompt, initiatePasswordResetPrompt } from './prompts';
+
+// Department tool prompts
+const getDepartmentsPrompt = `
+  Get departments from the system. 
+  
+  Optional: Provide a search term to filter departments by name.
+  
+  The response will be an array of departments with details like:
+  - id: Department identifier
+  - name: Department name
+  - leadId: ID of the department lead/manager
+  - lead: Object containing details about the department lead
+`;
+
+const createDepartmentsPrompt = `
+  Create multiple departments at once.
+  
+  Each department requires:
+  - name: Name of the department
+  - leadId: The employee ID who will be the lead/manager of the department
+  
+  The response will be an array of the newly created departments.
+`;
 
 const getAllEmployeeData = tool(
   async (args) => {
@@ -106,4 +129,124 @@ const deactivateEmployee = tool(
   }
 );
 
-export const tools: DynamicStructuredTool[] = [getAllEmployeeData, getEmployeeById, createEmployees, getEmployeeByEmailOrName, deactivateEmployee];
+const sendInviteToEmployee = tool(
+  async (args) => {
+    try {
+      const response = await axios.post(`/v1/employees/invite-all-employees`,{
+        ids: args.ids,
+        sendInviteToEveryone: args.sendInviteToEveryone,
+        status: "ONBOARDED"
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error sending invite to employee", error);
+      return error?.response?.data || "Error sending invite to employee";
+    }
+  },
+  {
+    name: "sendInviteToEmployee",
+    description: sendInviteToEmployeePrompt,
+    schema: z.object({
+      ids: z.array(z.number()).describe("The ids of the employees to invite"),
+      sendInviteToEveryone: z.boolean().describe("Whether to send invite to all employees or a Specific Employee Depends on the ids"),
+    }),
+  }
+);
+
+const moveEmployeesFromDeactivatedToActive = tool(
+  async (args) => {
+    try {
+      const response = await axios.post(`/v1/employees/activate`, {
+        ids: args.ids,
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error moving employees from deactivated to active", error);
+      return error?.response?.data || "Error moving employees from deactivated to active";
+    }
+  },
+  {
+    name: "moveEmployeesFromDeactivatedToActive",
+    description: moveEmployeesFromDeactivatedToActivePrompt,
+    schema: z.object({
+      ids: z.array(z.number()).describe("The ID's of the employees to activate"),
+    }),
+  }
+);
+
+const initiatePasswordReset = tool(
+  async (args) => {
+    try {
+      const response = await axios.post(`/v1/employees/reset-password`, {
+        email: args.email,
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error initiating password reset", error);
+      return error?.response?.data || "Error initiating password reset";
+    }
+  },
+  {
+    name: "initiatePasswordReset",  
+    description: initiatePasswordResetPrompt,
+    schema: z.object({
+      email: z.string().email().describe("The email address of the employee"),
+    }),
+  }
+);
+
+// New department tools
+const getDepartments = tool(
+  async (args) => {
+    try {
+      const params = args.term ? { term: args.term } : {};
+      const response = await axios.get(`/v1/departments`, { params });
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching departments", error);
+      return error?.response?.data || "Error fetching departments";
+    }
+  },
+  {
+    name: "getDepartments",
+    description: getDepartmentsPrompt,
+    schema: z.object({
+      term: z.string().optional().describe("Optional search term to filter departments by name"),
+    }),
+  }
+);
+
+const createDepartments = tool(
+  async (args) => {
+    try {
+      const response = await axios.post(`/v1/departments`, args.departments);
+      return response.data;
+    } catch (error) {
+      console.error("Error creating departments", error);
+      return error?.response?.data || "Error creating departments";
+    }
+  },
+  {
+    name: "createDepartments",
+    description: createDepartmentsPrompt,
+    schema: z.object({
+      departments: z.array(z.object({
+        name: z.string().describe("The name of the department"),
+        leadId: z.number().describe("The employee ID who is the lead of the department"),
+      })),
+    }),
+  }
+);
+
+export const tools: DynamicStructuredTool[] = [
+  getAllEmployeeData, 
+  getEmployeeById, 
+  createEmployees, 
+  getEmployeeByEmailOrName, 
+  deactivateEmployee, 
+  sendInviteToEmployee, 
+  moveEmployeesFromDeactivatedToActive, 
+  initiatePasswordReset,
+  getDepartments,
+  createDepartments
+];

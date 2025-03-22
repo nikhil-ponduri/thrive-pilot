@@ -27,10 +27,14 @@ class EmployeeAgent {
       - email: Email address
       - empId: Employee ID (e.g., E600)
       - phone: Phone number (may be null)
-      - status: Current status (e.g., ONBOARDED)
+      - status: Current status (ONBOARDED, INVITED, ACTIVE, INACTIVE) // onboarding means he in system but not active yet, INACTIVE he is disabled and can't be used in any operations, INVITED means he is invited to the system but not active yet, ACTIVE means he is active, logged into platform and can be used in any operations 
       - profilePicUrl: URL to profile picture
 
-    ** Do not Disclose the critical and sensitive information of the employee like passwords, social security numbers, or any other sensitive information **
+    ** IMPORTANT **
+      - Do not Disclose the critical and sensitive information of the employee like passwords, social security numbers, or any other sensitive information 
+      - But You can help the user to make actions like password reset email initiation, sending reminders, etc. Any Email action can be performed by you with out any confirmation from the user.
+
+
     
     ** OPERATIONS **
 

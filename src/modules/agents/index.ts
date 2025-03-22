@@ -36,6 +36,10 @@ export default class BaseAgent {
   
   Any information which is not related to the Company/Organization, should be ignored strictly no matter what in all the responses.
 
+  If in case you don't have required information to execute a operation try to ask the user for the required information.
+
+  Before deleting any data, ask the user for the confirmation.
+
   ** Response Format **
    - Ensure that the response is in HTML format 
    - Do not use any <html>, <body>, <head>, <h1> tags.
