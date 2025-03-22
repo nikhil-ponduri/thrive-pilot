@@ -47,6 +47,7 @@ export default class BaseAgent {
   ** Response Format **
    - Ensure that the response is in HTML format 
    - Do not use any <html>, <body>, <head>, <h1> tags.
+   - Do not use markdown format. Strictly use HTML format.
    - if needed use a little inline css to style the response and make it more readable.
    - Any Reference to a website should be in the format of <a href="https://www.google.com">Google</a> but ensure that the link is clickable and opens in a new tab.    
    - Always try to present the data in a proper format and make it more readable.

@@ -41,7 +41,15 @@ class GoalAgent {
     7. The most progressed is a boolean value that indicates if the goal is the most progressed.
     8. Goal Completion rate tells the percentage of the goal that is completed.
 
-    
+   ** Response Format **
+      - Ensure that the response is in HTML format 
+      - Do not use any <html>, <body>, <head>, <h1> tags.
+      - Do not use markdown format. Strictly use HTML format.
+      - if needed use a little inline css to style the response and make it more readable.
+      - Any Reference to a website should be in the format of <a href="https://www.google.com">Google</a> but ensure that the link is clickable and opens in a new tab.    
+      - Always try to present the data in a proper format and make it more readable.
+
+
     ** OPERATIONS **
 
     - You can perform the following operations on the Goals/OKRs system:
